@@ -1,0 +1,52 @@
+# Node.js dependencies
+backend/node_modules/
+frontend/node_modules/
+
+# Python virtual environments
+models/venv/
+models/.venv/
+
+# Environment variables and secrets
+backend/.env
+models/.env
+.env
+
+# Model weights and checkpoints
+models/*.pth
+models/*.pt
+models/*.ckpt
+models/*.bin
+
+# Jupyter notebook checkpoints
+models/.ipynb_checkpoints/
+
+# Build artifacts
+frontend/build/
+frontend/dist/
+
+# Logs
+*.log
+backend/logs/
+
+# OS/system files
+.DS_Store
+Thumbs.db
+
+# IDE/editor folders
+.vscode/
+.idea/
+
+# Misc
+*.pyc
+__pycache__/
+
+# Ignore local data and uploads (if any)
+uploads/
+
+# Ignore coverage and test output
+coverage/
+*.coverage
+
+# Ignore package lock files if not needed (optional)
+backend/package-lock.json
+frontend/package-lock.json
