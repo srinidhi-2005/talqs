@@ -1,14 +1,6 @@
-# TextSummarizer (talqs ai)
+# TextSummarizer (TALQS AI)
 
-A full-stack AI-powered web application for text summarization, with a legal Q&A chatbot. Built with React, Node.js/Express, MongoDB Atlas, and Python, FastAPI for custom models.
-
----
-
-## 🚀 Overview
-
-TextSummarizer (TALQS AI) enables users to upload documents or input text, receive high-quality summaries, and interact with a legal Q&A chatbot. The app features JWT authentication, user profiles, upload/summarization, multi-turn Q&A, and history tracking.
-
----
+TextSummarizer (TALQS AI) is a GenAI-powered, full-stack web application that leverages advanced Transformer-based Deep Learning models to simplify complex legal texts. Designed to make legal information more accessible to lawyers, researchers, and the general public, it summarizes lengthy judgments and answers legal queries through an intuitive interface. Users can upload documents or input text to receive high-quality summaries and interact with a legal Q&A chatbot. The platform features JWT authentication, user profiles, upload and summarization, multi-turn Q&A, and history tracking, and is built with React, Node.js/Express, MongoDB Atlas, and Python FastAPI for custom models.
 
 ## ✨ Features
 
@@ -19,8 +11,6 @@ TextSummarizer (TALQS AI) enables users to upload documents or input text, recei
 - **History of Summaries & Q&A**
 - **Modern Responsive UI** (React, Tailwind)
 - **Custom ML Models** (PyTorch, HuggingFace, FastAPI)
-
----
 
 ## 🏗️ Architecture
 
@@ -33,16 +23,12 @@ graph TD
   C -- Loads --> F[Custom QA Model]
 ```
 
----
-
 ## 🛠️ Tech Stack
 
 - **Frontend:** React, Tailwind CSS
 - **Backend:** Node.js, Express, JWT, Axios
 - **Database:** MongoDB Atlas (Mongoose ODM)
 - **ML Models:** Python, FastAPI, PyTorch, HuggingFace Transformers
-
----
 
 ## ⚙️ Setup Instructions
 
@@ -60,6 +46,7 @@ Create `.env` files in both `backend/` and `models/`:
 #### backend/.env
 
 ```
+PORT=9000
 MONGO_URI=your_mongodb_atlas_uri
 JWT_SECRET=your_jwt_secret
 FASTAPI_URL=http://localhost:8000
@@ -109,15 +96,11 @@ QA_MODEL_PATH=qa custom model.pth
   npm start
   ```
 
----
-
 ## 🔑 Authentication
 
 - JWT-based authentication
 - Store token in localStorage
 - Send `Authorization: Bearer <token>` in API requests
-
----
 
 ## 📚 API Endpoints
 
@@ -139,8 +122,6 @@ QA_MODEL_PATH=qa custom model.pth
   - Request: `{ question: <string> }`
   - Response: `{ answer: <string> }`
 
----
-
 ## 🧑‍💻 Usage
 
 1. **Sign up / Login**
@@ -148,11 +129,3 @@ QA_MODEL_PATH=qa custom model.pth
 3. **Download** or **copy** the summary
 4. **Ask legal questions** in the floating Q&A chat
 5. **View history** of summaries and Q&A
-
----
-
-## 🚀 Deployment
-
-- Configure environment variables for production
-- Use process managers (e.g., PM2 for Node.js, Gunicorn/Uvicorn for FastAPI)
-- Deploy frontend (Vercel, Netlify, etc.), backend (Render, Heroku, etc.), and models (cloud VM or container)
