@@ -24,7 +24,7 @@ const features = [
   },
   {
     title: "Dashboard",
-    desc: "View uploaded documents, summaries, and Q&A history.",
+    desc: "View uploaded documents and summaries.",
     icon: <MdSpaceDashboard className="w-10 h-10 mx-auto mb-4 text-[#800000]"/>
   },
   {

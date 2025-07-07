@@ -1,4 +1,3 @@
-const History = require('../models/History');
 const axios = require('axios');
 const FormData = require('form-data');
 const fs = require('fs');
@@ -17,12 +16,6 @@ exports.uploadAndSummarize = async (req, res) => {
       maxBodyLength: Infinity,
     });
     const summary = fastApiRes.data.summary;
-    await History.create({
-      userId: req.user.userId,
-      type: 'summary',
-      input: req.file.originalname,
-      output: summary,
-    });
     res.json({ summary });
   } catch (err) {
     res.status(500).json({ message: 'Server error', error: err.message });

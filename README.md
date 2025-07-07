@@ -1,6 +1,6 @@
 # TextSummarizer (TALQS AI)
 
-TextSummarizer (TALQS AI) is a GenAI-powered, full-stack web application that leverages advanced Transformer-based Deep Learning models to simplify complex legal texts. Designed to make legal information more accessible to lawyers, researchers, and the general public, it summarizes lengthy judgments and answers legal queries through an intuitive interface. Users can upload documents or input text to receive high-quality summaries and interact with a legal Q&A chatbot. The platform features JWT authentication, user profiles, upload and summarization, multi-turn Q&A, and history tracking, and is built with React, Node.js/Express, MongoDB Atlas, and Python FastAPI for custom models.
+TextSummarizer (TALQS AI) is a GenAI-powered, full-stack web application that leverages advanced Transformer-based Deep Learning models to simplify complex legal texts. Designed to make legal information more accessible to lawyers, researchers, and the general public, it summarizes lengthy judgments and answers legal queries through an intuitive interface. Users can upload documents or input text to receive high-quality summaries and interact with a legal Q&A chatbot. The platform features JWT authentication, user profiles, upload and summarization and multi-turn Q&A. It is built with React, Node.js/Express, MongoDB Atlas, and Python FastAPI for custom models.
 
 ## ✨ Features
 
@@ -8,7 +8,6 @@ TextSummarizer (TALQS AI) is a GenAI-powered, full-stack web application that le
 - **Profile Management**
 - **Document/Text Upload & Summarization**
 - **Legal Q&A Chatbot** (multi-turn, persistent chat)
-- **History of Summaries & Q&A**
 - **Modern Responsive UI** (React, Tailwind)
 - **Custom ML Models** (PyTorch, HuggingFace, FastAPI)
 
@@ -59,7 +58,21 @@ SUMMARY_MODEL_PATH=summary custom model.pth
 QA_MODEL_PATH=qa custom model.pth
 ```
 
-### 3. Install Dependencies
+### 3. (Recommended) Create a Python Virtual Environment
+
+It is recommended to use a virtual environment for the Python ML service to avoid dependency conflicts:
+
+```bash
+cd models
+python -m venv venv
+# Activate the environment:
+# On Windows:
+venv\Scripts\activate
+# On macOS/Linux:
+source venv/bin/activate
+```
+
+### 4. Install Dependencies
 
 - **Backend:**
   ```bash
@@ -78,7 +91,7 @@ QA_MODEL_PATH=qa custom model.pth
   # or install: fastapi uvicorn torch transformers python-multipart
   ```
 
-### 4. Run the Application
+### 5. Run the Application
 
 - **Start FastAPI ML Service:**
   ```bash
@@ -111,7 +124,6 @@ QA_MODEL_PATH=qa custom model.pth
 - `GET /api/profile` — Get user profile (auth)
 - `POST /api/upload` — Upload file or text for summarization (auth)
 - `POST /api/qa` — Ask a question to the QA bot (auth)
-- `GET /api/history` — Get user history (auth)
 
 ### FastAPI (Python ML Service)
 
@@ -128,4 +140,3 @@ QA_MODEL_PATH=qa custom model.pth
 2. **Upload a document** or **paste text** to summarize
 3. **Download** or **copy** the summary
 4. **Ask legal questions** in the floating Q&A chat
-5. **View history** of summaries and Q&A

@@ -20,10 +20,6 @@ const Navbar = () => {
     setDropdown(false);
     navigate("/profile");
   };
-  const handleHistory = () => {
-    setDropdown(false);
-    navigate("/history");
-  };
   const handleLogout = () => {
     logout();
     setDropdown(false);
@@ -31,9 +27,6 @@ const Navbar = () => {
   };
   const handleLogin = () => {
     navigate("/login");
-  };
-  const handleNewChat = () => {
-    navigate("/home?newchat=1");
   };
 
   return (
@@ -45,7 +38,6 @@ const Navbar = () => {
       <div className="flex items-center gap-4">
         {user ? (
           <>
-            <button onClick={handleNewChat} className="bg-white text-[#800000] px-5 py-2 rounded font-semibold shadow hover:bg-gray-100 transition">New</button>
             <div className="relative">
               <button
                 ref={buttonRef}
@@ -61,7 +53,6 @@ const Navbar = () => {
                   style={{ width: dropdownWidth }}
                 >
                   <button onClick={handleProfile} className="block w-full text-left px-4 py-2 hover:bg-gray-100">Profile</button>
-                  <button onClick={handleHistory} className="block w-full text-left px-4 py-2 hover:bg-gray-100">History</button>
                   <button onClick={handleLogout} className="block w-full text-left px-4 py-2 hover:bg-gray-100">Logout</button>
                 </div>
               )}
