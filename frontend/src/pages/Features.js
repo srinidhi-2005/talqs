@@ -9,12 +9,12 @@ import { FaUserLock } from "react-icons/fa";
 const features = [
   {
     title: "Legal Document Upload",
-    desc: "Upload legal documents (PDF, TXT) via a drag-and-drop interface for quick processing.",
+    desc: "Upload legal documents (.txt) via a drag-and-drop interface for quick processing.",
     icon: <ImFolderUpload className="w-10 h-10 mx-auto mb-4 text-[#800000]"/>
   },
   {
     title: "Automatic Summarization",
-    desc: "Generate abstractive or extractive summaries with customizable lengths (short, medium, or detailed).",
+    desc: "Generate abstractive summaries with customizable lengths..",
     icon: <PiFileTextDuotone className="w-10 h-10 mx-auto mb-4 text-[#800000]"/>
   },
   {
@@ -24,17 +24,17 @@ const features = [
   },
   {
     title: "Dashboard",
-    desc: "View uploaded documents and summaries.",
+    desc: "View user details and edit them.",
     icon: <MdSpaceDashboard className="w-10 h-10 mx-auto mb-4 text-[#800000]"/>
   },
   {
     title: "Download Summaries",
-    desc: "Export summaries and answers into documents.",
+    desc: "Export summaries into documents and listen to them.",
     icon: <MdOutlineDownload className="w-10 h-10 mx-auto mb-4 text-[#800000]"/>
   },
   {
     title: "User Authentication",
-    desc: "Secure login with role-based access (lawyer, client) and controlled document permissions.",
+    desc: "Secure login and controlled document permissions.",
     icon: <FaUserLock className="w-10 h-10 mx-auto mb-4 text-[#800000]"/>
   },
 ];
@@ -45,7 +45,7 @@ const Features = () => {
     <div ref={featuresRef} id="features-sec" className="bg-white pt-24 pb-16 mt-32 relative z-10">
       <div className="max-w-5xl mx-auto text-center mb-12">
         <h2 className="text-4xl font-bold text-[#800000] mb-2">Key Features</h2>
-        <p className="text-gray-600 text-lg">Discover what makes our text summarizer powerful and easy to use.</p>
+        <p className="text-gray-600 text-lg">Discover what makes our system powerful and easy to use.</p>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
         {features.map((feature, idx) => (

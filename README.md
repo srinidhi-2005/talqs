@@ -7,6 +7,7 @@ TextSummarizer (TALQS AI) is a GenAI-powered, full-stack web application that le
 - **User Authentication** (JWT, protected routes)
 - **Profile Management**
 - **Document/Text Upload & Summarization**
+- **Listen to the generated summaries**
 - **Legal Q&A Chatbot** (multi-turn, persistent chat)
 - **Modern Responsive UI** (React, Tailwind)
 - **Custom ML Models** (PyTorch, HuggingFace, FastAPI)
@@ -138,5 +139,5 @@ source venv/bin/activate
 
 1. **Sign up / Login**
 2. **Upload a document** or **paste text** to summarize
-3. **Download** or **copy** the summary
+3. **Download** or **copy** or **listen** the summary text
 4. **Ask legal questions** in the floating Q&A chat

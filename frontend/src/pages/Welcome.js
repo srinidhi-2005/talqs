@@ -61,7 +61,7 @@ const Welcome = () => {
 
             <div className="flex-grow flex flex-col items-center justify-center">
                 <h1 className="text-7xl font-bold text-[#DEDEDE] pb-12 text-center drop-shadow-lg">
-                    Welcome to your legal AI companion
+                    Welcome to your Legal AI Companion
                 </h1>
                 <h1 className="text-4xl font-semibold text-[#DEDEDE] pb-3 text-center drop-shadow-lg">
                     "Summarize judgments. Ask questions.
@@ -78,20 +78,12 @@ const Welcome = () => {
                     </button>
                     <button
                         className="px-8 py-3 border-2 border-[#800000] text-[#DEDEDE] rounded-lg hover:bg-[#800000] hover:text-white transition-all duration-300 text-lg font-medium"
+                        onClick={() => window.open('https://drive.google.com/file/d/11KNBqJ33oCIlgdJtMlvH1J7iTZ_9E7S-/view?usp=sharing', '_blank', 'noopener,noreferrer')}
                     >
                         Demo
                     </button>
                 </div>
             </div>
-
-            {!user && (
-                <button
-                    onClick={() => setShowLogin(true)}
-                    className="text-[#800000] underline mt-2"
-                >
-                    Login
-                </button>
-            )}
 
             {showLogin && (
                 <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40 z-50">

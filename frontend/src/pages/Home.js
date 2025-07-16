@@ -1,7 +1,6 @@
 import { useAuth } from "../AuthContext";
 import { useNavigate, useLocation } from "react-router-dom";
 import Navbar from "../components/Navbar";
-import BeamsBackground from "../components/BeamsBackground";
 import ModernFileUpload from "../components/ModernFileUpload";
 import { useEffect, useRef, useState } from "react";
 
@@ -18,9 +17,11 @@ const Home = () => {
   const [qaInput, setQaInput] = useState("");
   const [qaLoading, setQaLoading] = useState(false);
   const [qaError, setQaError] = useState("");
-  const [chat, setChat] = useState([]); // { sender: 'user'|'bot', text: string }
+  const [chat, setChat] = useState([]);
   const summaryRef = useRef(null);
   const chatEndRef = useRef(null);
+  const [isSpeaking, setIsSpeaking] = useState(false);
+  const [copied, setCopied] = useState(false);
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);
@@ -124,7 +125,26 @@ const Home = () => {
   const handleCopy = async () => {
     try {
       await navigator.clipboard.writeText(summary);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1200);
     } catch {}
+  };
+
+  const handleListen = () => {
+    if (!summary) return;
+    if (isSpeaking) {
+      window.speechSynthesis.cancel();
+      setIsSpeaking(false);
+      return;
+    }
+    const utterance = new window.SpeechSynthesisUtterance(summary);
+    utterance.rate = 0.9;
+    utterance.pitch = 1;
+    utterance.volume = 1;
+    utterance.onstart = () => setIsSpeaking(true);
+    utterance.onend = () => setIsSpeaking(false);
+    utterance.onerror = () => setIsSpeaking(false);
+    window.speechSynthesis.speak(utterance);
   };
 
   const handleAskQuestion = async (e) => {
@@ -154,20 +174,18 @@ const Home = () => {
   };
 
   return (
-    <div className="relative min-h-screen flex flex-col items-center justify-center overflow-x-hidden">
-      <BeamsBackground />
+    <div className="relative min-h-screen flex flex-col items-center justify-center overflow-x-hidden bg-[#f9f5f5]">
       <div className="absolute top-0 left-0 w-full z-30">
         <Navbar />
       </div>
       <div className="relative z-20 flex flex-col items-center justify-center min-h-screen w-full pt-32 pb-12">
         <div className="flex w-full max-w-7xl mx-auto gap-8 mt-8">
-          {/* Left 3/4: Upload/Text + Summary */}
           <div className="flex flex-[3] gap-8">
-            {/* Upload/textarea */}
             <div className="flex-1 bg-white/90 rounded-2xl shadow-2xl p-8 min-w-[400px] max-w-xl backdrop-blur-md">
               <h2 className="text-2xl font-bold mb-4 text-[#800000]">Summarize Document or Text</h2>
               <ModernFileUpload onFileSelect={handleFileSelect} />
-              <div className="mb-4 text-center text-gray-500">or</div>
+              
+              <div className="mb-4 text-center text-gray-500"></div>
               <textarea
                 value={inputText}
                 onChange={handleTextChange}
@@ -183,34 +201,46 @@ const Home = () => {
               </button>
               {error && <div className="text-red-600 mb-2 text-center">{error}</div>}
             </div>
-            {/* Summary output */}
             <div className="flex-1 bg-white/90 rounded-2xl shadow-2xl p-8 min-w-[400px] max-w-xl backdrop-blur-md flex flex-col" ref={summaryRef}>
               <h2 className="text-2xl font-bold mb-4 text-[#800000]">Summary Output</h2>
               {summary ? (
                 <>
                   <div className="mb-7 whitespace-pre-line break-words text-gray-800 bg-gray-100 rounded p-3 max-h-64 overflow-y-auto">{summary}</div>
-                  <div className="flex gap-16 mt-7 mb-7">
+                  <div className="flex gap-16 mt-7 mb-7 relative">
                     <button onClick={handleDownload} className="bg-[#800000] text-white px-4 py-2 rounded hover:bg-[#990909]">Download</button>
                     <button onClick={handleCopy} className="bg-gray-200 text-[#800000] px-4 py-2 rounded hover:bg-gray-300">Copy</button>
+                    <button 
+                      onClick={handleListen} 
+                      className={`px-4 py-2 rounded transition ${
+                        isSpeaking 
+                          ? 'bg-red-500 text-white hover:bg-red-600' 
+                          : 'bg-green-600 text-white hover:bg-green-700'
+                      }`}
+                    >
+                      {isSpeaking ? 'Stop' : 'Listen'}
+                    </button>
+                    {copied && (
+                      <div className="absolute left-1/2 -translate-x-1/2 -top-10 bg-black text-white px-4 py-2 rounded shadow-lg text-sm animate-fade-in-out z-50">
+                        Copied!
+                      </div>
+                    )}
                   </div>
-                  <div className="text-sm text-gray-500">Word count: {summary.trim().split(/\s+/).filter(Boolean).length}</div>
                 </>
               ) : (
                 <div className="text-gray-400 italic">No summary yet. Upload a document or enter text to summarize.</div>
               )}
             </div>
           </div>
-          {/* Right 1/4: Empty for balance */}
           <div className="flex-1" />
         </div>
-        {/* Floating QA Bot Button */}
+
         <button
           className="fixed bottom-8 right-8 z-40 bg-[#800000] text-white px-6 py-3 rounded-full shadow-lg text-lg font-semibold hover:bg-[#990909] transition"
           onClick={() => setShowQABot(true)}
         >
           Ask Questions
         </button>
-        {/* QA Bot Modal */}
+
         {showQABot && (
           <div className="fixed inset-0 flex items-end justify-end z-50 bg-black bg-opacity-30">
             <div className="bg-white rounded-t-2xl shadow-2xl p-6 w-full max-w-sm m-8 relative animate-slide-up flex flex-col h-[500px]">
@@ -222,15 +252,16 @@ const Home = () => {
               </button>
               <h3 className="text-xl font-bold mb-2 text-[#800000]">Legal Q&A Bot</h3>
               <div className="flex-1 overflow-y-auto mb-2 bg-gray-50 rounded p-2">
-                {chat.length === 0 && <div className="text-gray-400 text-center mt-8">Ask a question about your document...</div>}
+                {chat.length === 0 && (
+                  <div className="text-gray-400 text-center mt-8">Ask a question about your document...</div>
+                )}
                 {chat.map((msg, idx) => (
-                  <div key={idx} className={`mb-2 flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}>
+                  <div key={idx} className={`mb-2 flex ${msg.sender === "user" ? "justify-end" : "justify-start"}`}>
                     <div
-                      className={`rounded-lg px-4 py-2 text-sm max-w-[80%] ${
-                        msg.sender === 'user'
-                          ? 'bg-[#e0e7ff] text-gray-900'
-                          : 'bg-[#f3f4f6] text-[#800000] border border-[#e0e0e0]'
-                      }`}
+                      className={`rounded-lg px-4 py-2 text-sm max-w-[80%] ${msg.sender === "user"
+                          ? "bg-[#e0e7ff] text-gray-900"
+                          : "bg-[#f3f4f6] text-[#800000] border border-[#e0e0e0]"
+                        }`}
                     >
                       {msg.text}
                     </div>
@@ -242,7 +273,7 @@ const Home = () => {
                 <input
                   type="text"
                   value={qaInput}
-                  onChange={e => setQaInput(e.target.value)}
+                  onChange={(e) => setQaInput(e.target.value)}
                   placeholder="Ask a question..."
                   className="flex-1 border border-gray-300 rounded px-3 py-2"
                   disabled={qaLoading}

@@ -21,15 +21,27 @@ const ModernFileUpload = ({ onFileSelect }) => {
     e.stopPropagation();
     setDragActive(false);
     if (e.dataTransfer.files && e.dataTransfer.files[0]) {
-      setFileName(e.dataTransfer.files[0].name);
-      onFileSelect(e.dataTransfer.files[0]);
+      const file = e.dataTransfer.files[0];
+      if (file.type === "text/plain" && file.name.endsWith('.txt')) {
+        setFileName(file.name);
+        onFileSelect(file);
+      } else {
+        setFileName("");
+        alert("Only .txt files are allowed.");
+      }
     }
   };
 
   const handleChange = (e) => {
     if (e.target.files && e.target.files[0]) {
-      setFileName(e.target.files[0].name);
-      onFileSelect(e.target.files[0]);
+      const file = e.target.files[0];
+      if (file.type === "text/plain" && file.name.endsWith('.txt')) {
+        setFileName(file.name);
+        onFileSelect(file);
+      } else {
+        setFileName("");
+        alert("Only .txt files are allowed.");
+      }
     }
   };
 
@@ -48,11 +60,12 @@ const ModernFileUpload = ({ onFileSelect }) => {
         type="file"
         className="hidden"
         onChange={handleChange}
+        accept=".txt"
       />
       <div className="flex flex-col items-center justify-center">
         <IoCloudUploadSharp className="w-12 h-12 text-[#800000] mb-2" />
         <span className="font-semibold text-gray-700">Drag & drop or click to upload</span>
-        <span className="text-xs text-gray-500 mt-1">Supported: .txt, .doc</span>
+        <span className="text-xs text-gray-500 mt-1">Supported: .txt only</span>
         {fileName && <div className="mt-2 text-sm text-[#800000]">Selected: {fileName}</div>}
       </div>
     </div>

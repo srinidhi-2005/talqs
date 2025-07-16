@@ -100,7 +100,7 @@ const Contact = () => {
             <h4 className="text-white font-semibold mb-2 border-b-2 border-[#800000] inline-block pb-1">Connect</h4>
             <div className="flex gap-[16px] mt-2">
                 <a
-                href="https://github.com/"
+                href="https://github.com/srinidhi-2005/talqs"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-white text-xl hover:text-3xl"
